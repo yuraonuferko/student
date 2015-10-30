@@ -1,0 +1,58 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Групи{% endblock meta_title %}
+{% block active_groups %} class="active" {% endblock active_groups %}
+{% block title %}Групи {% endblock title %}
+
+{% block content %}
+
+<a href="{% url "students_add" %}" class="btn btn-primary">Додати Групу </a>
+
+           <table class="table table-hover table scriped">
+             <thead>
+               <tr>
+                 <th> №</th>
+                 <th> Назва</th>
+                 <th> Староста &uarr;</th>
+                 <th> Дії </th>
+               </tr>
+             </thead>
+             <tbody>
+               {% for leader in leaders %}
+               <tr>
+                 <td> {{ forloop.counter }} </td>
+                 
+                 <td> <a title="Редагувати" href="{% url "groups_edit" leader.id %}"> {{ leader.grupa }} </a></td>    
+                 <td> <a title="Редагувати" href="{% url "groups_edit" leader.id %}"> {{ leader.starosta }} </a></td> 
+                 <td>
+                    <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle"
+                              type="button" data-toggle="dropdown">Дія
+                         <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/journal/1">Відвідування</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "groups_edit" leader.id %}">Редагувати</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "groups_delete" leader.id %}">Видалити</a></li>
+                      </ul>
+                    </div> 
+                 </td>
+               
+               </tr>
+               {% endfor %}
+             </tbody>
+           <table>
+           <nav>
+             <ul class="pagination">
+               <li><a href="#">&laquo;</a></li>
+               <li><a href="#">1</a></li>
+               <li class="active"><a href="#">2</a></li>
+               <li><a href="#">3</a></li>
+               <li><a href="#">4</a></li>
+               <li><a href="#">5</a></li>
+               <li><a href="#">&raquo;</a></li>
+             </ul>
+           </nav>
+   {% endblock content %}     

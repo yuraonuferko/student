@@ -1,0 +1,87 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="uk" >
+<head>
+<meta charset="utf-8"/>
+
+<title>Сервіс Обліку студентів -{% block meta_title %}{% endblock meta_title %} </title>
+
+<meta name="description"
+      value="Система обліку студнтів навчального закладу"/>
+
+<!-Підключаємо bootstrap->
+<link  rel="stylesheet"
+       href="https://cdn.jsdelivr.net/bootstrap/3.3.0/css/bootstrap.min.css">
+<!-- розмітка технічна <style type="text/css">.col-xs-12, .col-xs-4, .col-xs-8 {border : 1px solid red;}-->
+ <style type="text/css">.col-xs-4{margin-top: 30px;}
+
+</style>
+
+<link rel="stylesheet" href="{% static "css/main.css" %}">
+{% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body>
+<!-start container->
+  <div class="container">
+  <!--start header-->
+    <div class="row" id="header">
+      <div class="col-xs-8"><h1>Сервіс обліку студентів </h1>
+      </div>
+    <!--group selector-->
+      <div class="col-xs-4" id="group-selector">
+        <strong>Група: </strong>
+        <select>
+          <option value="">Усі студенти </option>
+          <option value="">МтМ - 21, Подоба Віталій (No 254)</option>
+          <option value="">МтМ - 22, Корост Андрій (No 2123)</option>
+        </select>      
+      
+      
+      
+      </div>
+    </div> 
+    <!-- end grop selector-->
+    <!-- start sub-header-->
+    <div class="row" id="sub-header">
+      <div class="col-xs-12">
+         <ul class="nav nav-tabs" role=tablist>
+           <li role="presentation" {% block active_student %}{% endblock active_student %}><a href="{% url "home" %}">Студенти </a> </li>
+           <li role="presentation" {% block active_journal %}{% endblock active_journal %}><a href="/journal"> Відвідування </a> </li>
+           <li role="presentation"{% block active_groups %}{% endblock active_groups %}><a href="{% url "groups" %}"> Групи </a> </li>
+         </ul>
+      </div>
+    </div>
+  <!-- End SubHeader-->
+  <!-- start main pages content-->
+    <div class="row" id="content-columns">
+      <div class="col-xs-12" id="content-column">
+        {% comment "Not used alert so far" %}
+        <!--status masagess-->
+        <div class="alert alert-warning">Зміни скасовано</div>
+        {% endcomment %}
+        <h2>{% block title %}{% endblock title %}</h2>
+            {% block content %}{% endblock content %}
+      </div>
+    </div>
+  <!-- end main pages content-->
+   <!--start footer-->
+    <div class="row" id="footer">
+      <div class="col-xs-12">
+        &copy; 2015 Сервіс обліку студентів
+      </div>
+    </div>
+  </div> 
+  <!--end footer-->
+
+<!-- End Container -->
+
+<!-javaScript підключаємоо  у кінці об не гальмував сайт->
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"> </script>
+<script src="https://cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% block extra_js %}{% endblock extra_js %}
+</body>    
+
+</html>
+
