@@ -54,9 +54,20 @@
              </thead>
              {% endwith %}
              <tbody>
-               {% for student in students %}
+               
                <tr>
-                 <td> {{student.id}} </td> 
+                  
+               {% for student in students %}
+                 <td>{%if order_by == 'id'%}{{student.id}}
+                     {% else %}
+                     {{forloop.counter|add:value}}
+                     {%endif%}
+                    
+                      
+        
+                     
+                     
+                 </td>
                  {% if student.photo %}
                  <td> <img class="img-circle" src="{{ student.photo.url }}" height="30" width="30" /></td>
                  {% else %}
@@ -81,26 +92,29 @@
                
                </tr>
                {% endfor %}
+               
+
              </tbody>
            <table>
-           {% if students.has_other_pages %}
-           {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+           {% if students.page_all != '[]'  %}   <!--{% if students.has_other_pages %-->
+            
+            {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
            <nav>
              <ul class="pagination">
               <nav>
                   <ul class="pagination">
-                    <li><a href="{% url "home" %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a>
-                    </li>
-                  {% for p in students.paginator.page_range %}
-                    <li {% if students.number == p %}class="active"{% endif %}>
-                       <a href="{% url "home" %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ p }}</a>
-                    </li>
-                  {% endfor %}
-                    <li>
-                      <a href="{% url "home" %}?page={{ students.paginator.num_pages}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a>
-                    </li>
+                    <!-- Перейти до першої сторінки <<         -->
+                    <li><a href="{% url "home" %}?page={{start_page}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
+                    {%for i in storinka%}
+                     <li {% ifequal i page %}class="active" {%endifequal%}>
+                        <a href="{% url "home" %}?page={{ i }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ i }}</a>
+                     </li>
+                    {%endfor%}
+                           
+                  <!--   # Перейти до останньої сторінки >>           -->
+                    <li><a href="{% url "home" %}?page={{ end_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a></li>
                   </ul>
               </nav>
-           {% endwith %}
+            {% endwith %}
            {% endif %}
    {% endblock content %}     
