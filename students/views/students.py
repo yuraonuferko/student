@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from ..models import Student
+from ..models.students import Student
 from django.template import Context, Template 
 
 # Create your views here.

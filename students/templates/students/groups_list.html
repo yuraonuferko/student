@@ -9,23 +9,47 @@
 {% block content %}
 
 <a href="{% url "students_add" %}" class="btn btn-primary">Додати Групу </a>
-
            <table class="table table-hover table scriped">
+{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+
              <thead>
                <tr>
-                 <th> №</th>
-                 <th> Назва</th>
-                 <th> Староста &uarr;</th>
-                 <th> Дії </th>
+                 <th><a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1 {% endif %}">
+                  №
+                  {% if order_by == 'id' and reverse != '1' %}&uarr;
+                  {% elif order_by == 'id' and reverse == '1' %}&darr;
+                  {% endif%}
+                 </th>
+                 <th><a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1 {% endif %}">
+                  Назва
+                  {% if order_by == 'title' and reverse != '1' %}&uarr;
+                  {% elif order_by == 'title' and reverse == '1' %}&darr;
+                  {% endif%}
+                  {% if order_by == '' %}&uarr;
+                  {%endif%}
+                 </th>
+                 <th><a href="{% url "groups" %}?order_by=leader{% if order_by == 'leader' and reverse != '1' %}&amp;reverse=1 {% endif %}">
+                  Староста
+                  {% if order_by == 'leader' and reverse != '1' %}&uarr;
+                  {% elif order_by == 'leader' and reverse == '1' %}&darr;
+                  {% endif %}
+                 </th>
+                 <th> &nbsp;&nbsp;&nbsp;Дії </th>
                </tr>
              </thead>
              <tbody>
                {% for leader in leaders %}
                <tr>
-                 <td> {{ forloop.counter }} </td>
-                 
-                 <td> <a title="Редагувати" href="{% url "groups_edit" leader.id %}"> {{ leader.grupa }} </a></td>    
-                 <td> <a title="Редагувати" href="{% url "groups_edit" leader.id %}"> {{ leader.starosta }} </a></td> 
+                 <td>
+                  {%if order_by == 'id'%}{{leader.id}}
+                     {% else %}
+                     {{forloop.counter}}
+                     {%endif%}
+                 </td>
+                 <td> {{ leader.title }} </td>
+                 <td> {{ leader.leader }} </td>
+                    
+                  
                  <td>
                     <div class="dropdown">
                       <button class="btn btn-default dropdown-toggle"
@@ -39,20 +63,27 @@
                       </ul>
                     </div> 
                  </td>
+                   
                
                </tr>
                {% endfor %}
+ {% endwith %}             
              </tbody>
            <table>
-           <nav>
+              
              <ul class="pagination">
-               <li><a href="#">&laquo;</a></li>
-               <li><a href="#">1</a></li>
-               <li class="active"><a href="#">2</a></li>
-               <li><a href="#">3</a></li>
-               <li><a href="#">4</a></li>
-               <li><a href="#">5</a></li>
-               <li><a href="#">&raquo;</a></li>
-             </ul>
-           </nav>
+              <nav>
+                  <ul class="pagination">
+                    <!-- Перейти до першої сторінки <<         -->
+                    <li><a href="{% url "groups" %}?page={{start_page}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
+                    {%for i in storinka%}
+                     <li {% ifequal i page %}class="active" {%endifequal%}>
+                        <a href="{% url "groups" %}?page={{ i }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ i }}</a>
+                     </li>
+                    {%endfor%}
+                           
+                  <!--   # Перейти до останньої сторінки >>           -->
+                    <li><a href="{% url "groups" %}?page={{ end_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a></li>
+                  </ul>
+              </nav>
    {% endblock content %}     
