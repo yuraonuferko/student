@@ -29,7 +29,17 @@ urlpatterns = patterns('',
     url(r'^groups/(?P<gid>\d+)/edit/$','students.views.groups.groups_edit',name='groups_edit'),
     url(r'^groups/(?P<gid>\d+)/delete/$','students.views.groups.groups_delete',name='groups_delete'),
 
+# Exam urls
+    url(r'^exam/$', 'students.views.exam.exam_list', name='exam'),
+    url(r'^exam/add/$', 'students.views.exam.exam_add',name='exam_add'),
+    url(r'^exam/(?P<gid>\d+)/edit/$','students.views.exam.exam_edit',name='exam_edit'),
+    url(r'^exam/(?P<gid>\d+)/delete/$','students.views.exam.exam_delete',name='exam_delete'),
 
+# Journal urls
+    url(r'^journal/$', 'students.views.journal.journal_list', name='journal'),
+    #url(r'^exam/add/$', 'students.views.exam.exam_add',name='exam_add'),
+    #url(r'^exam/(?P<gid>\d+)/edit/$','students.views.exam.exam_edit',name='exam_edit'),
+    #url(r'^exam/(?P<gid>\d+)/delete/$','students.views.exam.exam_delete',name='exam_delete'),
 
 
 url(r'^admin/', include(admin.site.urls)),

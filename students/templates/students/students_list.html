@@ -54,20 +54,9 @@
              </thead>
              {% endwith %}
              <tbody>
-               
-               <tr>
-                  
                {% for student in students %}
-                 <td>{%if order_by == 'id'%}{{student.id}}
-                     {% else %}
-                     {{forloop.counter|add:value}}
-                     {%endif%}
-                    
-                      
-        
-                     
-                     
-                 </td>
+               <tr>
+                 <td> {{student.id}} </td> 
                  {% if student.photo %}
                  <td> <img class="img-circle" src="{{ student.photo.url }}" height="30" width="30" /></td>
                  {% else %}
@@ -92,8 +81,6 @@
                
                </tr>
                {% endfor %}
-               
-
              </tbody>
            <table>
            {% if students.page_all != '[]'  %}   <!--{% if students.has_other_pages %-->
