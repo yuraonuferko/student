@@ -15,7 +15,7 @@
              {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
              <thead>
                <tr>
-                 <th><a href="{% url "home" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1 {% endif %}">
+                 <th><a href="{% url "home" %}?page={{ current_page }}&amp;order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1  {% endif %}">
                   
                  
                   №
@@ -25,7 +25,7 @@
                      
                  </th>
                  <th> Фото</th>
-                 <th><a href="{% url "home" %}?order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1 {% endif %}"> 
+                 <th><a href="{% url "home" %}?page={{ current_page }}&amp;order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1 {% endif %}"> 
                  Прізвище
                  
                  {% if order_by == 'last_name' and reverse != '1' %}&uarr;
@@ -34,14 +34,14 @@
                  {% if order_by == '' %}&uarr;
                  {%endif%}
                  </th>
-                 <th><a href="{% url "home" %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1 {% endif %}">
+                 <th><a href="{% url "home" %}?page={{ current_page }}&amp;order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1 {% endif %}">
                  Ім'я
                  {% if order_by == 'first_name' and reverse != '1' %}&uarr;
                  {% elif order_by == 'first_name' and reverse == '1' %}&darr;
                  {% endif %}
                      
                  </th>
-                 <th><a href="{% url "home" %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1 {% endif %}">
+                 <th><a href="{% url "home" %}?page={{ current_page }}&amp;order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1 {% endif %}">
                  № Білету
                  {% if order_by == 'ticket'  and reverse != '1'%}&uarr;
                  {% elif order_by == 'ticket' and reverse == '1' %}&darr;
@@ -85,23 +85,13 @@
            <table>
            {% if students.page_all != '[]'  %}   <!--{% if students.has_other_pages %-->
             
-            {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
-           <nav>
-             <ul class="pagination">
-              <nav>
-                  <ul class="pagination">
-                    <!-- Перейти до першої сторінки <<         -->
-                    <li><a href="{% url "home" %}?page={{start_page}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
-                    {%for i in storinka%}
-                     <li {% ifequal i page %}class="active" {%endifequal%}>
-                        <a href="{% url "home" %}?page={{ i }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ i }}</a>
-                     </li>
-                    {%endfor%}
-                           
-                  <!--   # Перейти до останньої сторінки >>           -->
-                    <li><a href="{% url "home" %}?page={{ end_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a></li>
-                  </ul>
-              </nav>
+           {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+           <!-- palace for paginator-->
+            <a href="{% url "home" %}?page={{ current_page }}" style={{display}} class="btn btn-primary">Load More </a>
             {% endwith %}
            {% endif %}
-   {% endblock content %}     
+   {% endblock content %}
+{% block extra_js %}
+var a = $('a:last').attr("href");
+
+{% endblock extra_js %}

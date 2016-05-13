@@ -9,39 +9,48 @@ from django.template import Context, Template
 
 # Views for Students
 def students_list(request):
+    
     students = Student.objects.all()          
-    #number_students=range(1,len(students)+1)
-    # try to order students list
+    
+    
     order_by = request.GET.get('order_by', '')
     if order_by=='':
         students=students.order_by('last_name')
         all_range_students=Student.objects.values_list('id', flat=True).order_by('last_name')
+        
     if order_by in ('last_name', 'first_name', 'ticket','id'):
         students = students.order_by(order_by)
         all_range_students=Student.objects.values_list('id', flat=True).order_by(order_by)
         
-        #for i in range(1,len(all_range_students)+1):value+=value[i]
-        if request.GET.get('reverse', '') == '1':
-            students = students.reverse
-            p=Student.objects.values_list('id', flat=True).order_by(order_by)
-            all_range_students=p.reverse()
+        
+    if request.GET.get('reverse', '') == '1':
+        students = students.reverse
+        p=Student.objects.values_list('id', flat=True).order_by(order_by)
+        all_range_students=p.reverse()
+            
     
     try:
         page = int(request.GET.get('page'))
     except: 
         page = 1
-    #except EmptyPage:
-     #   page=end_page
+    
     # потрібно обчислити змінну all_range_students відповідно до сортування. Передати список id у відсортованому списку
     
     def group(all_range_students, count):
           # """ Группировка элементов последовательности по count элементов """
         return [all_range_students[i:i + count] for i in range(0, len(all_range_students), count)]
-    page_all=group(all_range_students,3)
+    page_all=group(all_range_students,3*page)
+    current_page=page + 1 
+    
+    
     #Список сторінок по їх номерах
     storinka=range(1,len(page_all) +1)
     start_page=page_all.index(page_all[0])+1
     end_page=len(page_all)
+    display = 'display:visible'
+    if page > end_page:
+        display = "display:none";
+        
     b=0
     value={}
     for i in storinka:
@@ -64,7 +73,8 @@ def students_list(request):
                 # last page of results.
             #students = paginator.page(paginator.num_pages)
     return render(request, 'students/students_list.html',{'students': students,'start_page':start_page,
-                                                          'end_page':end_page,'storinka':storinka,'page':page,'value':value,'order_by':order_by})
+           'end_page':end_page,'storinka':storinka,'page':page,'value':value,'order_by':order_by,
+           'current_page':current_page,'display':display})
 
     
     # paginate students
