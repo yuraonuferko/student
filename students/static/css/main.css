@@ -32,6 +32,10 @@ h1,h2,h3,h4,h5,h6 {
 select {
         margin-top: 100px;
 }
+/*#month_oblik select{
+        margin-left: 200px;
+}
+*/
 #my     {
         margin-top: 100px;
         margin-left: 50px;

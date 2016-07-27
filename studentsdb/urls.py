@@ -32,8 +32,8 @@ urlpatterns = patterns('',
 # Exam urls
     url(r'^exam/$', 'students.views.exam.exam_list', name='exam'),
     url(r'^exam/add/$', 'students.views.exam.exam_add',name='exam_add'),
-    url(r'^exam/(?P<gid>\d+)/edit/$','students.views.exam.exam_edit',name='exam_edit'),
-    url(r'^exam/(?P<gid>\d+)/delete/$','students.views.exam.exam_delete',name='exam_delete'),
+    url(r'^exam/(?P<eid>\d+)/edit/$','students.views.exam.exam_edit',name='exam_edit'),
+    url(r'^exam/(?P<eid>\d+)/delete/$','students.views.exam.exam_delete',name='exam_delete'),
 
 # Journal urls
     url(r'^journal/$', 'students.views.journal.journal_list', name='journal'),
