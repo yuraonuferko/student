@@ -7,6 +7,8 @@ from ..models.groups import  Group
 from django.template import Context, Template 
 from django.core.urlresolvers import reverse
 from datetime import datetime
+from django.contrib import messages
+#from django.contrib.messages import constants as messages
 
 # Create your views here.
 
@@ -178,7 +180,9 @@ def students_add(request):
                 student = Student(**data)
                 student.save()
                 # redirect to students list
-                return HttpResponseRedirect(u'%s?status_message=Студента  %s %s  успішно додано!'% (reverse('home'),first_name,last_name))
+                #return HttpResponseRedirect(u'%s?status_message=Студента  %s %s  успішно додано!'% (reverse('home'),first_name,last_name))
+                messages.success(request, u'Студента %s %s успішно додано!'%(first_name,last_name))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 # render form with errors and previous user input
                 return render(request, 'students/students_add.html',
@@ -210,7 +214,13 @@ def students_add(request):
                 'errors': errors})
         elif request.POST.get('cancel_button') is not None:
                 # redirect to home page on cancel button
-                return HttpResponseRedirect(u'%s?status_message=Додавання студента скасовано!' % reverse('home'))
+                #return HttpResponseRedirect(u'%s?status_message=Додавання студента скасовано!' % reverse('home'))
+                #MESSAGE_TAGS = {messages.INFO: u'Додавання студента скасовано!',}
+                messages.info(request, u'Додавання студента скасовано!')
+                #messages.add_message(request, messages.INFO, 'Додавання студента скасовано!')
+                #return render(request, 'students/students_list.html', MESSAGE_TAGS)
+                #return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('home'),MESSAGE_TAGS ) )
+                return HttpResponseRedirect(reverse('home'))
     else:
                 # initial form render
                 return render(request, 'students/students_add.html',{'groups': Group.objects.all().order_by('title')})

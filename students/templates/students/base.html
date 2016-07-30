@@ -52,9 +52,13 @@
         
         <!--status masagess-->
         {% block status_message %}
-        {% if request.GET.status_message %}
-      <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
-        {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning" id = "{{message.tags}}"role="alert">{{ message }}</div>
+       {%endfor%}
+        
+        {%endif%}
+        
         {% endblock %}
         
         <h2>{% block title %}{% endblock title %}</h2>
