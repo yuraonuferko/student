@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'students',
     'crispy_forms',
+    'django-contact-form',
     )
 
 MIDDLEWARE_CLASSES = (
