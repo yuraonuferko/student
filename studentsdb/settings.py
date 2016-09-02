@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'students',
     'crispy_forms',
-    'django-contact-form',
+    'contact_form',
     )
 
 MIDDLEWARE_CLASSES = (
@@ -68,7 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            
+                #'studentsdb.context_processors.students_proc',
             ],
         },
     },
@@ -126,7 +126,7 @@ ADMIN_EMAIL = 'netadmin@ukrpost.ua'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '465'
 EMAIL_HOST_USER = 'yonuferko@gmail.com'
-EMAIL_HOST_PASSWORD = 'zirochka'
+EMAIL_HOST_PASSWORD = 'delajlama#1'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
